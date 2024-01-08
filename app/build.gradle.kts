@@ -2,11 +2,13 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "com.aviral.stockpulse"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.aviral.stockpulse"
@@ -31,11 +33,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    kotlin {
+        jvmToolchain(18)
     }
     buildFeatures {
         compose = true
@@ -73,7 +78,7 @@ dependencies {
 
     // Compose dependencies
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1")
-    implementation("androidx.compose.material:material-icons-extended:2.4.1")
+//    implementation("androidx.compose.material:material-icons-extended:2.4.1")
     implementation("com.google.accompanist:accompanist-flowlayout:0.17.0")
     implementation("androidx.paging:paging-compose:1.0.0-alpha14")
     implementation("androidx.activity:activity-compose:1.6.0-alpha01")
@@ -95,4 +100,11 @@ dependencies {
 
     // Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.4.2")
+
+    //Dagger - Hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    ksp("com.google.dagger:hilt-compiler:2.44")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    ksp("androidx.hilt:hilt-compiler:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 }

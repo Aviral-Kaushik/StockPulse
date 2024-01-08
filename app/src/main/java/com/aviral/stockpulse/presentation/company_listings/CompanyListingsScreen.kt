@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
@@ -24,7 +25,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination(start = true)
 fun CompanyListingsScreen(
     navigator: DestinationsNavigator,
-    viewModel: CompanyListingsViewModel
+    viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
 
     val swipeRefreshState = rememberSwipeRefreshState(

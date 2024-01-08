@@ -8,11 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aviral.stockpulse.domain.repository.StockRepository
 import com.aviral.stockpulse.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CompanyListingsViewModel(
+@HiltViewModel
+class CompanyListingsViewModel @Inject constructor(
     private val repository: StockRepository
 ) : ViewModel() {
 
