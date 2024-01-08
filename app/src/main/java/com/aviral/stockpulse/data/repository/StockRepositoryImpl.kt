@@ -1,7 +1,10 @@
 package com.aviral.stockpulse.data.repository
 
+import com.aviral.stockpulse.data.csv.CSVParser
+import com.aviral.stockpulse.data.csv.CompanyListingsParser
 import com.aviral.stockpulse.data.local.StockDatabase
 import com.aviral.stockpulse.data.mapper.toCompanyListing
+import com.aviral.stockpulse.data.mapper.toCompanyListingEntity
 import com.aviral.stockpulse.data.remote.StockApi
 import com.aviral.stockpulse.domain.model.CompanyListing
 import com.aviral.stockpulse.domain.repository.StockRepository
@@ -12,8 +15,9 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class StockRepositoryImpl(
-    val api: StockApi,
-    val db: StockDatabase
+    private val api: StockApi,
+    private val db: StockDatabase,
+    private val companyListingsParser: CSVParser<CompanyListing>
 ) : StockRepository {
 
     private val dao = db.dao
@@ -39,13 +43,25 @@ class StockRepositoryImpl(
 
             val remoteListing = try {
                 val response = api.getListings()
-                response.byteStream()
+                companyListingsParser.parse(response.byteStream())
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
+                null
             } catch (e: HttpException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            remoteListing?.let { listings ->
+                dao.clearCompanyListing()
+                dao.insertCompanyListings(
+                    listings.map { it.toCompanyListingEntity() }
+                )
+
+                emit(Resource.Success(data = listings))
+                emit(Resource.Loading(isLoading = false))
             }
         }
 
