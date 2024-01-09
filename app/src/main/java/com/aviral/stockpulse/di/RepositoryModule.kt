@@ -2,8 +2,10 @@ package com.aviral.stockpulse.di
 
 import com.aviral.stockpulse.data.csv.CSVParser
 import com.aviral.stockpulse.data.csv.CompanyListingsParser
+import com.aviral.stockpulse.data.csv.IntradayInfoParser
 import com.aviral.stockpulse.data.repository.StockRepositoryImpl
 import com.aviral.stockpulse.domain.model.CompanyListing
+import com.aviral.stockpulse.domain.model.IntradayInfo
 import com.aviral.stockpulse.domain.repository.StockRepository
 import dagger.Binds
 import dagger.Module
@@ -20,6 +22,13 @@ abstract class RepositoryModule {
     abstract fun bindCompanyListingsParser(
         companyListingsParser: CompanyListingsParser
     ): CSVParser<CompanyListing>
+
+    @Binds
+    @Singleton
+    abstract fun bindIntradayInfoParser(
+        intradayInfoParser: IntradayInfoParser
+    ): CSVParser<IntradayInfo>
+
 
     @Binds
     @Singleton
