@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraph
 import com.aviral.stockpulse.presentation.company_listings.NavGraphs
 import com.aviral.stockpulse.ui.theme.StockPulseTheme
 import com.ramcosta.composedestinations.DestinationsNavHost

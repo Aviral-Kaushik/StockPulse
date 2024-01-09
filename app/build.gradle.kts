@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+//    kotlin("kapt")
 }
 
 android {
@@ -40,7 +41,7 @@ android {
         jvmTarget = "17"
     }
     kotlin {
-//        jvmToolchain(18)
+        jvmToolchain(17)
     }
     buildFeatures {
         compose = true
@@ -83,6 +84,7 @@ dependencies {
     implementation("androidx.paging:paging-compose:1.0.0-alpha14")
     implementation("androidx.activity:activity-compose:1.6.0-alpha01")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
 
     // Compose Nav Destinations
     implementation("io.github.raamcosta.compose-destinations:core:1.1.2-beta")
@@ -96,15 +98,25 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:2.4.2")
-    ksp("androidx.room:room-compiler:2.4.2")
+    kapt("androidx.room:room-compiler:2.4.2")
 
     // Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.4.2")
 
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.44")
-    ksp("com.google.dagger:hilt-compiler:2.44")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    ksp("androidx.hilt:hilt-compiler:1.0.0")
+    kapt("com.google.dagger:hilt-compiler:2.44")
+//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kapt("com.google.dagger:dagger-android-processor:2.44")
+//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:2.44")
+
+
+    implementation("com.google.android.gms:play-services-gcm:16.1.0")
+//    kapt("groupId:artifactId:version")
+}
+
+kapt {
+    correctErrorTypes = true
 }
