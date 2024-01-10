@@ -22,44 +22,56 @@ class CompanyInfoViewModel @Inject constructor(
     var state by mutableStateOf(CompanyInfoState())
 
     init {
+
         viewModelScope.launch {
+
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
+
             state = state.copy(isLoading = true)
+
             val companyInfoResult = async { repository.getCompanyInfo(symbol) }
             val intradayInfoResult = async { repository.getIntradayInfo(symbol) }
 
             when(val result = companyInfoResult.await()) {
                 is Resource.Success -> {
+
                     state = state.copy(
                         company = result.data,
                         isLoading = false,
                         error = null
                     )
+
                 }
                 is Resource.Error -> {
+
                     state = state.copy(
                         isLoading = false,
                         error = result.message,
                         company = null
                     )
+
                 }
                 else -> Unit
             }
 
             when(val result = intradayInfoResult.await()) {
                 is Resource.Success -> {
+
                     state = state.copy(
                         stockInfo = result.data ?: emptyList(),
                         isLoading = false,
                         error = null
                     )
+
                 }
                 is Resource.Error -> {
+
                     state = state.copy(
                         isLoading = false,
                         error = result.message,
                         company = null
                     )
+
                 }
                 else -> Unit
             }
