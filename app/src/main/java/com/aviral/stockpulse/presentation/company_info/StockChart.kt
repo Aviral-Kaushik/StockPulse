@@ -74,7 +74,7 @@ fun StockChart(
 
         val priceStep = (upperValue - lowerValue) / 5f
 
-        (1..5).forEach { i ->
+        (1..4).forEach { i ->
 
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
